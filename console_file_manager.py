@@ -41,6 +41,17 @@ if __name__ == "__main__":
                 shutil.copytree(input("Введите имя папки, который хотите скопировать: "), input("Введите новое имя папки : "))
         elif choice == '4':
             print(os.listdir())
+            ans = input("Сохранить содержимое рабочей директории в файл? (да/нет)")
+            if ans == "да":
+                files = []
+                dirs = []
+                for entry in os.listdir():
+                    if os.path.isdir(entry):
+                        dirs.append(entry)
+                    elif os.path.isfile(entry):
+                        files.append(entry)
+                with open("listdir.txt", "w") as f:
+                    f.write(f"files: {', '.join(files)} \ndirs: {', '.join(dirs)}")
         elif choice == '5':
             for entry in os.listdir():
                 if os.path.isdir(entry):

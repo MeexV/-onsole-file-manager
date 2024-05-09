@@ -1,6 +1,38 @@
-def balance():
-    balance = 0
+import os
+
+
+def save_balance(balance):
+    with open("balance.txt", "w") as f:
+        f.write(str(balance))
+
+
+def load_balance():
+    if os.path.exists("balance.txt"):
+        with open("balance.txt", "r") as f:
+            return int(f.read())
+    else:
+        return 0
+
+
+def save_history(history):
+    with open("history.txt", "w") as f:
+        for item in history:
+            f.write(f"{item[0]}: {item[1]}\n")
+
+
+def load_history():
     history = []
+    if os.path.exists("history.txt"):
+        with open("history.txt", "r") as f:
+            for line in f:
+                name, cost = line.strip().split(": ")
+                history.append((name, int(cost)))
+    return history
+
+
+def balance():
+    balance = load_balance()
+    history = load_history()
 
     while True:
         print()
@@ -21,10 +53,14 @@ def balance():
             else:
                 balance -= cost
                 name = input("Введите название покупки: ")
-                history.append((name,cost))
+                history.append((name, cost))
         elif choice == '3':
-            print(history)
+            print("История покупок:")
+            for item in history:
+                print(f"{item[0]}: {item[1]}")
         elif choice == '4':
+            save_balance(balance)
+            save_history(history)
             break
         else:
             print('Неверный пункт меню')
