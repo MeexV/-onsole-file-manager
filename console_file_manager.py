@@ -24,7 +24,7 @@ if __name__ == "__main__":
         print('10. мой банковский счет ')
         print('11. выход ')
 
-        choice = input('Выберите пункт меню ')
+        choice = input('Выберите пункт меню: ')
         if choice == '1':
             os.mkdir(input("Введите имя папки: "))
         elif choice == '2':
@@ -36,30 +36,22 @@ if __name__ == "__main__":
         elif choice == '3':
             ans = input("Что вы хотите удалить?: ")
             if ans == "файл":
-                shutil.copy(input("Введите имя файла, который хотите скопировать: "), input("Введите новое имя файла : "))
+                shutil.copy(input("Введите имя файла, который хотите скопировать: "), input("Введите новое имя файла: "))
             else:
-                shutil.copytree(input("Введите имя папки, который хотите скопировать: "), input("Введите новое имя папки : "))
+                shutil.copytree(input("Введите имя папки, который хотите скопировать: "), input("Введите новое имя папки: "))
         elif choice == '4':
             print(os.listdir())
-            ans = input("Сохранить содержимое рабочей директории в файл? (да/нет)")
+            ans = input("Сохранить содержимое рабочей директории в файл? (да/нет): ")
             if ans == "да":
                 files = []
                 dirs = []
-                for entry in os.listdir():
-                    if os.path.isdir(entry):
-                        dirs.append(entry)
-                    elif os.path.isfile(entry):
-                        files.append(entry)
+                [dirs.append(entry) if os.path.isdir(entry) else files.append(entry) for entry in os.listdir()]
                 with open("listdir.txt", "w") as f:
                     f.write(f"files: {', '.join(files)} \ndirs: {', '.join(dirs)}")
         elif choice == '5':
-            for entry in os.listdir():
-                if os.path.isdir(entry):
-                    print(entry)
+            [print(entry) for entry in os.listdir() if os.path.isdir(entry)]
         elif choice == '6':
-            for entry in os.listdir():
-                if os.path.isfile(entry):
-                    print(entry)
+            [print(entry) for entry in os.listdir() if os.path.isfile(entry)]
         elif choice == '7':
             print(sys.platform)
         elif choice == '8':
