@@ -44,20 +44,27 @@ def balance():
 
         choice = input('Выберите пункт меню ')
         if choice == '1':
-            cost = int(input("Введите сумму пополнения: "))
-            balance += cost
+            try:
+                cost = abs(int(input("Введите сумму пополнения: ")))
+                balance += cost
+            except ValueError:
+                print("Введите числовое значение!")
+            except:
+                print("Введите корректное значение!")
         elif choice == '2':
-            cost = int(input("Введите сумму покупки: "))
-            if cost > balance:
-                print("Недостаточно средств на счете!")
-            else:
-                balance -= cost
-                name = input("Введите название покупки: ")
-                history.append((name, cost))
+            try:
+                cost = abs(int(input("Введите сумму покупки: ")))
+                if cost > balance:
+                    print("Недостаточно средств на счете!")
+                else:
+                    balance -= cost
+                    name = input("Введите название покупки: ")
+                    history.append((name, cost))
+            except ValueError:
+                print("Введите числовое значение!")
         elif choice == '3':
             print("История покупок:")
-            for item in history:
-                print(f"{item[0]}: {item[1]}")
+            [print(f"{item[0]}: {item[1]}") for item in history]
         elif choice == '4':
             save_balance(balance)
             save_history(history)
